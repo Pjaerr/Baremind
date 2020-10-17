@@ -1,0 +1,19 @@
+<style>
+  svg {
+    stroke: rgb(var(--color-action-confirm));
+  }
+</style>
+
+<svg
+  width="100%"
+  height="100%"
+  fill="none"
+  viewBox="0 0 24 24"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round">
+  <polyline points="17 1 21 5 17 9" />
+  <path d="M3 11V9a4 4 0 0 1 4-4h14" />
+  <polyline points="7 23 3 19 7 15" />
+  <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+</svg>

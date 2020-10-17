@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+
+  /*Colours*/
+  --color-text: 53, 59, 72;
+  --color-divider: 245, 245, 245;
+  --color-accent: 200, 214, 229;
+  --color-priority-high: 255, 107, 107;
+  --color-priority-medium: 254, 202, 87;
+  --color-priority-low: 0, 168, 255;
+  --color-action-confirm: 46, 204, 113;
+  --color-action-dangerous: 192, 57, 43;
+  --color-background-primary: 255, 255, 255;
+  --color-background-secondary: 247, 248, 252;
+  --color-background-tertiary: 241, 242, 246;
+
+  /*Specific One-off Colours*/
+  --color-icon-task-inbox: 247, 159, 31;
+  --color-icon-note-inbox: 255, 195, 18;
+  --color-icon-today: 68, 189, 50;
+  --color-icon-upcoming: 108, 92, 231;
+
+  /*Font Sizes*/
+  --font-size-body: 1em;
+  --font-size-tertiary-info: 0.8em;
+  --font-size-heading-large: 2em;
+  --font-size-heading-small: 1.2em;
+
+  font-size: var(--font-size-body);
+  color: var(--color-text);
+}

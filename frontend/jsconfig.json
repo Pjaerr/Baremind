@@ -1,0 +1,12 @@
+{
+  "include": ["src/models.js"],
+  "compilerOptions": {
+    "baseUrl": "src",
+      "paths": {
+        "components/*": ["components/*"],
+        "services/*": ["services/*"],
+        "icon": ["icons/Icon"],
+        "constants": ["constants.js"]
+      }
+  },
+}
