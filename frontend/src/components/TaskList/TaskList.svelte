@@ -1,8 +1,7 @@
-<script>
+<script lang="ts">
   import Task from "components/Task/Task.svelte";
 
-  /** @type {TaskItemModel[]}*/
-  export let tasks;
+  export let tasks: TaskModel[];
 </script>
 
 {#each tasks as task (task.id)}

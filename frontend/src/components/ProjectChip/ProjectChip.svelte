@@ -1,6 +1,6 @@
-<script>
-  export let color;
-  export let name;
+<script lang="ts">
+  export let color: string;
+  export let name: string;
 </script>
 
 <div class="project-chip__color-block" style="background-color: {color}" />

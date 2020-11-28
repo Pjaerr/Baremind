@@ -1,0 +1,16 @@
+{
+  "extends": "@tsconfig/svelte/tsconfig.json",
+
+  "include": ["src/**/*", "src/node_modules", "src/models/*"],
+  "exclude": ["node_modules/*", "public/*"],
+
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "components/*": ["components/*"],
+      "services/*": ["services/*"],
+      "icon": ["icons/Icon"],
+      "constants": ["constants.js"]
+    }
+  }
+}

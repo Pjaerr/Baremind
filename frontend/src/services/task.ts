@@ -2,22 +2,20 @@ import { database } from "../database/database";
 import { v4 as uuidv4 } from "uuid";
 
 class TaskService {
+  hasInitialised: boolean;
+
   constructor() {
     this.hasInitialised = false;
   }
 
   async initialise() {
-    // await database.create("tasks", {
-    //   block: "example-project_0" ,
-    //   name: "A task that has a date and repeats",
-    //   priority: 1,
-    //   subTasks: [],
-    //   project: { name: "life", colour: "green" },
-    //   due: { date: "18/08/2020", time: "15:00" },
-    //   hasNotes: false,
-    //   hasReminder: false,
-    //   isRepeating: true,
-    //   isCompleted: false,
+    //Example task
+
+    // this.add({
+    //   name: "Feed the dogs",
+    //   dueDate: "2020-11-28",
+    //   hasDueTime: true,
+    //   dueTime: "14:30:00",
     // });
 
     this.hasInitialised = true;
@@ -54,6 +52,21 @@ class TaskService {
     }
   }
 
+  async getAllForDate(date) {
+    if (this.hasInitialised) {
+      const tasks = await database
+        .getAll("tasks")
+        .where("dueDate")
+        .equals(date);
+
+      return { tasks };
+    } else {
+      throw new Error(
+        "You're trying to use TaskService before calling .initialise()"
+      );
+    }
+  }
+
   async get(id) {
     if (this.hasInitialised) {
       const task = await database.get("tasks", id);
@@ -77,26 +90,34 @@ class TaskService {
     name,
     priority = 0,
     subTasks = [],
-    project = null,
-    due = { date: null, time: null },
-    hasNotes = false,
-    hasReminder = false,
-    isRepeating = false,
+    isSubTask = false,
+    repeats = null,
+    hasNote = false,
+    hasDueTime = false,
+    dueDate = null,
+    dueTime = null,
     isCompleted = false,
-  }) {
+    project = null,
+    reminder = null,
+    timeBlocks = null,
+  }: Partial<TaskModel>) {
     // Here we create a task with all the properties supplied, we then create it on the database but we don't wait for that to complete, instead we return the task so that the UI can be updated.
-    const task = {
+    const task: TaskModel = {
       id: uuidv4(),
       block,
       name,
       priority,
       subTasks,
-      project,
-      due,
-      hasNotes,
-      hasReminder,
-      isRepeating,
+      isSubTask,
+      repeats,
+      hasNote,
+      hasDueTime,
+      dueDate,
+      dueTime,
       isCompleted,
+      project,
+      reminder,
+      timeBlocks,
     };
 
     database.create("tasks", task);

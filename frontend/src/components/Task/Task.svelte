@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { createEventDispatcher } from "svelte";
   import { slide } from "svelte/transition";
   import { isLimitedScreenSpace } from "../../stores";
@@ -9,8 +9,7 @@
   import Icon from "icon";
   import ProjectChip from "components/ProjectChip/ProjectChip.svelte";
 
-  /** @type {TaskItemModel} */
-  export let task;
+  export let task: TaskModel;
   export let showProject = false;
 
   let subTasksIsOpen = false;
@@ -22,7 +21,7 @@
 </script>
 
 <div class="task">
-  {#if showProject}
+  {#if showProject && task.project}
     <div class="task__project">
       <ProjectChip name={task.project.name} color={task.project.color} />
     </div>
@@ -56,28 +55,28 @@
             </div>
           {/if}
           <div class="task-content__date-and-time">
-            {#if task.due.date}
+            {#if task.dueDate}
               <div class="task-content__date">
                 <div class="task-content__date__icon">
                   <Icon.Calendar />
                 </div>
-                <div class="task-content__date__text">{task.due.date}</div>
+                <div class="task-content__date__text">{task.dueDate}</div>
               </div>
             {/if}
 
-            {#if task.due.time}
+            {#if task.dueTime}
               <div class="task-content__time">
                 <div class="task-content__time__icon">
                   <Icon.Clock />
                 </div>
-                <div class="task-content__time__text">{task.due.time}</div>
+                <div class="task-content__time__text">{task.dueTime}</div>
               </div>
             {/if}
           </div>
         </div>
 
         <div class="task-content__actions">
-          {#if task.isRepeating}
+          {#if task.repeats}
             <div type="button" class="task-content__repeat-icon">
               <Icon.Repeat />
             </div>
@@ -119,7 +118,7 @@
 
   .task__project {
     display: flex;
-    font-size: var(--font-size-tertiary-info);
+    font-size: var(--font-size-secondary-info);
     font-weight: bold;
   }
 

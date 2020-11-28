@@ -9,6 +9,7 @@ body {
 
   /*Colours*/
   --color-text: 53, 59, 72;
+  --color-text-secondary: 87, 101, 116;
   --color-divider: 245, 245, 245;
   --color-accent: 200, 214, 229;
   --color-priority-high: 255, 107, 107;
@@ -28,7 +29,8 @@ body {
 
   /*Font Sizes*/
   --font-size-body: 1em;
-  --font-size-tertiary-info: 0.8em;
+  --font-size-secondary-info: 0.8em;
+  --font-size-tertiary-info: 0.6em;
   --font-size-heading-large: 2em;
   --font-size-heading-small: 1.2em;
 

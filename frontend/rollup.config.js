@@ -3,6 +3,7 @@ import autoPreprocess from "svelte-preprocess";
 import postcssImport from "postcss-import";
 import alias from "@rollup/plugin-alias";
 import path from "path";
+import typescript from "@rollup/plugin-typescript";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -31,7 +32,7 @@ export const config = {
           },
           {
             find: "constants",
-            replacement: path.resolve(__dirname, "src/constants.js")
+            replacement: path.resolve(__dirname, "src/constants.js"),
           },
           {
             find: "database",
@@ -39,6 +40,7 @@ export const config = {
           },
         ],
       }),
+      typescript({ sourceMap: !production }),
     ];
 
     return rollup;
