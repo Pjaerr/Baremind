@@ -11,21 +11,22 @@ type DayOfWeek = 1 | 2 | 3 | 4 | 5 | 6 | 7; // Monday, Tuesday etc
 type DayOfMonth = number; // 0...31
 type NumberOfDays = number; // every 9 days...or every 2 years (730 days)
 
-type Task = {
+type TaskModel = {
   id: uuid;
+  block: string; //null if not in a project
   name: string;
   priority: PriorityLevel;
   subTasks: Task[] | [];
-  isSubTask: boolean;
-  isRepeating: boolean;
+  isSubTask: boolean; //Do we need to store the ID of the parent task?
   repeats: {
     type: "dayOfWeek" | "dayOfMonth" | "numberOfDays";
     frequency: DayOfWeek | DayOfMonth | NumberOfDays;
-  };
+  } | null;
   hasNote: boolean;
   hasDueTime: boolean;
   dueDate: DateString;
   dueTime: TimeString;
+  isCompleted: boolean;
 
   project: {
     slug: string;
@@ -34,7 +35,6 @@ type Task = {
   };
 
   //Future properties (not needed for base functionality)
-  hasReminder: boolean;
   reminder: {
     type: "before" | "at" | "recurring";
     when: number | TimeString; //before/recurring in minutes or exact time in TimeString

@@ -20,7 +20,7 @@ class Database {
           });
 
           taskStore.createIndex("block", "block", { unique: false });
-          taskStore.createIndex("date", "date", { unique: false });
+          taskStore.createIndex("dueDate", "dueDate", { unique: false });
         }
 
         if (!db.objectStoreNames.contains("notes")) {

@@ -9,7 +9,7 @@
   import Icon from "icon";
   import ProjectChip from "components/ProjectChip/ProjectChip.svelte";
 
-  export let task: Task;
+  export let task: TaskModel;
   export let showProject = false;
 
   let subTasksIsOpen = false;
@@ -19,6 +19,86 @@
 
   const dispatch = createEventDispatcher();
 </script>
+
+<div class="task">
+  {#if showProject && task.project}
+    <div class="task__project">
+      <ProjectChip name={task.project.name} color={task.project.color} />
+    </div>
+  {/if}
+
+  <div class="task-content">
+    <div class="task-content__left">
+      <div class="task__toggle-sub-tasks">
+        {#if subTasksIsAllowedToBeToggled && task.subTasks.length > 0}
+          <Collapser bind:isOpen={subTasksIsOpen} />
+        {/if}
+      </div>
+      <Tickbox
+        priority={task.priority}
+        on:click={() => dispatch('update', {
+            task: {
+              ...task,
+              isCompleted: true,
+            },
+          })} />
+    </div>
+    <div class="task-content__right">
+      <div class="task-content__right__top">
+        <p class="task-content__name">{task.name}</p>
+      </div>
+      <div class="task-content__right__bottom">
+        <div class="task-content__right__bottom__left">
+          {#if task.subTasks.length > 0}
+            <div class="task-content__sub-tasks-indicator">
+              <SubTasksIndicator count={task.subTasks.length} />
+            </div>
+          {/if}
+          <div class="task-content__date-and-time">
+            {#if task.dueDate}
+              <div class="task-content__date">
+                <div class="task-content__date__icon">
+                  <Icon.Calendar />
+                </div>
+                <div class="task-content__date__text">{task.dueDate}</div>
+              </div>
+            {/if}
+
+            {#if task.dueTime}
+              <div class="task-content__time">
+                <div class="task-content__time__icon">
+                  <Icon.Clock />
+                </div>
+                <div class="task-content__time__text">{task.dueTime}</div>
+              </div>
+            {/if}
+          </div>
+        </div>
+
+        <div class="task-content__actions">
+          {#if task.repeats}
+            <div type="button" class="task-content__repeat-icon">
+              <Icon.Repeat />
+            </div>
+          {/if}
+          <button
+            type="button"
+            class="task-content__delete-button"
+            on:click={() => dispatch('delete', { task })}>
+            <Icon.Bin />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <span class="task__divider" />
+  {#if subTasksIsAllowedToBeToggled && subTasksIsOpen}
+    <div class="task__sub-tasks" transition:slide={{ duration: 100 }}>
+      <TaskList tasks={task.subTasks} />
+    </div>
+  {/if}
+</div>
 
 <style>
   .task {
@@ -38,7 +118,7 @@
 
   .task__project {
     display: flex;
-    font-size: var(--font-size-tertiary-info);
+    font-size: var(--font-size-secondary-info);
     font-weight: bold;
   }
 
@@ -154,83 +234,3 @@
     padding-left: 24px;
   }
 </style>
-
-<div class="task">
-  {#if showProject}
-    <div class="task__project">
-      <ProjectChip name={task.project.name} color={task.project.color} />
-    </div>
-  {/if}
-
-  <div class="task-content">
-    <div class="task-content__left">
-      <div class="task__toggle-sub-tasks">
-        {#if subTasksIsAllowedToBeToggled && task.subTasks.length > 0}
-          <Collapser bind:isOpen={subTasksIsOpen} />
-        {/if}
-      </div>
-      <Tickbox
-        priority={task.priority}
-        on:click={() => dispatch('update', {
-            task: {
-              ...task,
-              isCompleted: true,
-            },
-          })} />
-    </div>
-    <div class="task-content__right">
-      <div class="task-content__right__top">
-        <p class="task-content__name">{task.name}</p>
-      </div>
-      <div class="task-content__right__bottom">
-        <div class="task-content__right__bottom__left">
-          {#if task.subTasks.length > 0}
-            <div class="task-content__sub-tasks-indicator">
-              <SubTasksIndicator count={task.subTasks.length} />
-            </div>
-          {/if}
-          <div class="task-content__date-and-time">
-            {#if task.due.date}
-              <div class="task-content__date">
-                <div class="task-content__date__icon">
-                  <Icon.Calendar />
-                </div>
-                <div class="task-content__date__text">{task.due.date}</div>
-              </div>
-            {/if}
-
-            {#if task.due.time}
-              <div class="task-content__time">
-                <div class="task-content__time__icon">
-                  <Icon.Clock />
-                </div>
-                <div class="task-content__time__text">{task.due.time}</div>
-              </div>
-            {/if}
-          </div>
-        </div>
-
-        <div class="task-content__actions">
-          {#if task.isRepeating}
-            <div type="button" class="task-content__repeat-icon">
-              <Icon.Repeat />
-            </div>
-          {/if}
-          <button
-            type="button"
-            class="task-content__delete-button"
-            on:click={() => dispatch('delete', { task })}>
-            <Icon.Bin />
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <span class="task__divider" />
-  {#if subTasksIsAllowedToBeToggled && subTasksIsOpen}
-    <div class="task__sub-tasks" transition:slide={{ duration: 100 }}>
-      <TaskList tasks={task.subTasks} />
-    </div>
-  {/if}
-</div>

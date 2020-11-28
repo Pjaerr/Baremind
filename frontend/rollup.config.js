@@ -40,7 +40,7 @@ export const config = {
           },
         ],
       }),
-      typescript({ sourcemap: !production }),
+      typescript({ sourceMap: !production }),
     ];
 
     return rollup;
